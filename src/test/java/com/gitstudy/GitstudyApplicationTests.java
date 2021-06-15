@@ -8,7 +8,7 @@ class GitstudyApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("22222");
+
         System.out.println("feature-blue");
     }
 
