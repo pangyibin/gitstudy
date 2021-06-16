@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gitstudy.mapper.TutorMapper">
+    <resultMap type="com.gitstudy.entity.Address" id="AddressResult">
+    <id property="addrId" column="addr_id" />
+    <result property="street" column="street" />
+    <result property="city" column="city" />
+    <result property="state" column="state" />
+    <result property="zip" column="zip" />
+    <result property="country" column="country" />
+    </resultMap>
+
+    <resultMap type="com.gitstudy.entity.Course" id="CourseResult">
+        <id column="course_id" property="courseId" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+    </resultMap>
+    <resultMap type="com.gitstudy.entity.Tutor" id="TutorResult">
+    <id column="tutor_id" property="tutorId" />
+    <result column="name" property="name" />
+    <result column="email" property="email" />
+    <association property="address" resultMap="AddressResult" />
+    <collection property="courses" resultMap="CourseResult" />
+    </resultMap>
+
+
+
+    <select id="findTutorById" parameterType="int" resultMap="TutorResult">
+        select
+            t.tutor_id, t.name, t.email,
+            c.course_id, c.name, c.description, c.start_date, c.end_date,
+            a.addr_id,a.street,a.city,a.state,a.zip,a.country
+        from
+            tutors t
+                left outer join addresses a on t.addr_id = a.addr_id
+                left outer join courses c on t.tutor_id = c.tutor_id
+        where
+            t.tutor_id=#{id}
+    </select>
+
+
+</mapper>

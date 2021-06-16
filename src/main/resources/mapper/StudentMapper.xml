@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gitstudy.mapper.StudentMapper">
+    <resultMap type="com.gitstudy.entity.Student" id="StudentWithAddressResult">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+
+        <result property="address.addrId" column="addr_id" />
+        <result property="address.street" column="street" />
+        <result property="address.city" column="city" />
+        <result property="address.state" column="state" />
+        <result property="address.zip" column="zip" />
+        <result property="address.country" column="country" />
+    </resultMap>
+
+    <select id="findAllStudents" resultMap="StudentWithAddressResult">
+        SELECT * FROM STUDENTS s,ADDRESSES a WHERE s.addr_id=a.addr_id
+    </select>
+    <select id="findStudentById" parameterType="int"
+            resultType="com.gitstudy.entity.Student">
+        SELECT ID,NAME,EMAIL,dob
+        FROM STUDENTS WHERE ID=#{Id}
+    </select>
+
+
+</mapper>
